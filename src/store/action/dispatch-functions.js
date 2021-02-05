@@ -1,9 +1,11 @@
 // Note: All dispatch functions are defined here...!
 
+import { Alert } from "react-native";
 import {
     ADD_ITEM,
     DELETE_ITEM,
-    EDIT_ITEM
+    EDIT_ITEM,
+    DELETE_ALL_ITEMS
 }
     from "../constant/action-types";
 
@@ -35,5 +37,15 @@ export const editToDoItem = (obj) => {
             type: EDIT_ITEM,
             payload: obj
         });
+    }
+}
+
+// Note: Function to delete all items...!
+export const clearAll = () => {
+    return (dispatch) => {
+        dispatch({
+            type: DELETE_ALL_ITEMS
+        });
+        Alert.alert("Deleted All Items Successfully!");
     }
 }

@@ -3,7 +3,8 @@
 import {
     ADD_ITEM,
     DELETE_ITEM,
-    EDIT_ITEM
+    EDIT_ITEM,
+    DELETE_ALL_ITEMS
 }
     from "../constant/action-types";
 
@@ -38,6 +39,15 @@ export default (state = INIT_STATE, action) => {
             return {
                 ...state,
                 todoArr: todoArrClone2
+            }
+
+        case DELETE_ALL_ITEMS:
+            let todoArrClone3 = state.todoArr.slice(0);
+            todoArrClone3.splice(0, todoArrClone3.length);
+
+            return {
+                ...state,
+                todoArr: todoArrClone3
             }
 
         default:

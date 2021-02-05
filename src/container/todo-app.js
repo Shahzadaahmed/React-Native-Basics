@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     Alert
 } from "react-native";
-import { addToDoItem, deleteToDoItem, editToDoItem } from "../store/action/dispatch-functions";
+import { addToDoItem, deleteToDoItem, editToDoItem, clearAll } from "../store/action/dispatch-functions";
 let targetKey;
 
 const ToDoListApp = () => {
@@ -53,9 +53,28 @@ const ToDoListApp = () => {
             value: inputValue,
             key: targetKey
         }
-        dispatch(editToDoItem(obj));
+
+        if (inputValue != 0) {
+            dispatch(editToDoItem(obj));
+            setIsEditing(false);
+            setInputValue("");
+        }
+
+        else {
+            Alert.alert("Error! Please fill the required field first!");
+            setInputValue("");
+        }
+    }
+
+    // Function to cancel updates...!
+    const cancel = () => {
         setIsEditing(false);
         setInputValue("");
+    }
+
+    // Function to delete all items...!
+    const deleteAllItems = () => {
+        dispatch(clearAll());
     }
 
     return (
@@ -70,15 +89,27 @@ const ToDoListApp = () => {
                 (isEditing)
                     ?
                     (
-                        <TouchableOpacity onPress={updateItem}>
-                            <Text> Update Item </Text>
-                        </TouchableOpacity>
+                        <View>
+                            <TouchableOpacity onPress={updateItem}>
+                                <Text> Update Item </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={cancel}>
+                                <Text> Cancel </Text>
+                            </TouchableOpacity>
+                        </View>
                     )
                     :
                     (
-                        <TouchableOpacity onPress={addItem}>
-                            <Text> Add Item </Text>
-                        </TouchableOpacity>
+                        <View>
+                            <TouchableOpacity onPress={addItem}>
+                                <Text> Add Item </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={deleteAllItems}>
+                                <Text> Delete All Items </Text>
+                            </TouchableOpacity>
+                        </View>
                     )
             }
 
